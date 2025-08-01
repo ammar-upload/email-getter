@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+
+  .custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: black; /* box when unchecked */
+    border: 2px solid white;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .custom-checkbox:checked {
+    background-color: white; /* box when checked */
+  }
+
+  .custom-checkbox:checked::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 0px;
+    left: 4px;
+  }
+
+        @keyframes roller {
+          0%  {
+              transform: translateX(-60vw);
+              width: 20% ;
+          }
+          100% {
+            transform: translateX(100vw);
+            width: 60% ;
+          }
+        }
+        .roller {
+            animation: roller 1.5s linear  infinite ;
+        }
+        img.icon {
+  filter: brightness(0) invert(1);
+}
+
+    </style>
+</head>
+</head>
+<body>
+
+ 
+
+
+    <%- include("layout") %>
+ 
+<script src="script.js"></script>
+</body>
+</html>
