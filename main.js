@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const port = process.env.PORT || 3000;
+const port =  3000;
 const mongoose = require('mongoose');
 
 mongoose.connect("mongodb+srv://ammaremailgettter:ammar2122009@emailgetter.kmcdj23.mongodb.net/?retryWrites=true&w=majority&appName=EmailGetter", {
@@ -20,7 +20,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 const User = require('./models/db');
-const Key = require('./models/keys');
+
 
 app.get("/", (req, res) => {
   res.render("index" , {bodyClass:'dark:bg-black'});
@@ -89,14 +89,16 @@ app.get('/getUser', async (req, res) => {
   }
 });
 function getTime() {
-  const now = new Date();
-  return now.toLocaleTimeString('en-US', {
+  const formatter = new Intl.DateTimeFormat('en-US', {
     timeZone: 'Asia/Karachi',
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
   });
+
+  return formatter.format(new Date());
 }
+
 
 
 // BACKEND CODE
@@ -215,17 +217,6 @@ app.post("/getAllUserInfo", async (req, res) => {
 });
 
 
-// Adjust path if needed
-
-async function saveKeys(user, adminKey, userKey) {
-  try {
-    const newKey = new Key({ user, adminKey, userKey });
-    const saved = await newKey.save();
-    console.log("✅ Keys saved:", saved);
-  } catch (err) {
-    console.error("❌ Error saving keys:", err.message);
-  }
-}
 
 
 
