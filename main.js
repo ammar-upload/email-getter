@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const port = 3000;
+const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 
 mongoose.connect("mongodb+srv://ammaremailgettter:ammar2122009@emailgetter.kmcdj23.mongodb.net/?retryWrites=true&w=majority&appName=EmailGetter", {
@@ -231,6 +231,6 @@ async function saveKeys(user, adminKey, userKey) {
 
 
 
-app.listen(port,'0.0.0.0',  () => {
+app.listen(port,  () => {
     console.log(`Example app listening on port ${port}`)
   })
