@@ -20,6 +20,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 const User = require('./models/db');
+const Key = require('./models/keys');
 
 app.get("/", (req, res) => {
   res.render("index" , {bodyClass:'dark:bg-black'});
@@ -89,20 +90,12 @@ app.get('/getUser', async (req, res) => {
 });
 function getTime() {
   const now = new Date();
-  let hours = now.getHours();
-  let minutes = now.getMinutes();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-
-  // Convert hours from 24h to 12h format
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-
-  // Pad minutes with leading zero if needed
-  if (minutes < 10) {
-    minutes = '0' + minutes;
-  }
-
-  return `${hours}:${minutes} ${ampm}`;
+  return now.toLocaleTimeString('en-US', {
+    timeZone: 'Asia/Karachi',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  });
 }
 
 
@@ -220,6 +213,21 @@ app.post("/getAllUserInfo", async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
+
+
+// Adjust path if needed
+
+async function saveKeys(user, adminKey, userKey) {
+  try {
+    const newKey = new Key({ user, adminKey, userKey });
+    const saved = await newKey.save();
+    console.log("✅ Keys saved:", saved);
+  } catch (err) {
+    console.error("❌ Error saving keys:", err.message);
+  }
+}
+
+
 
 
 

